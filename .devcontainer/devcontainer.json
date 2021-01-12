@@ -1,0 +1,25 @@
+{
+  "name": "Achernar DSO App",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "target": "development",
+    "context": "..",
+    "args": {
+      "NODE_VERSION": "14"
+    }
+  },
+  "settings": {
+    "terminal.integrated.shell.linux": "/bin/zsh"
+  },
+  "extensions": [
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "editorconfig.editorconfig",
+    "christian-kohler.npm-intellisense",
+    "mikestead.dotenv",
+    "ms-azuretools.vscode-docker"
+  ],
+  "mounts": [
+    "source=achernar-dso-app-node_modules,target=${containerWorkspaceFolder}/node_modules,type=volume"
+  ]
+}
