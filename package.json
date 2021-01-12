@@ -1,0 +1,14 @@
+{
+  "name": "achernar-dso-app",
+  "version": "0.1.0",
+  "main": "main.js",
+  "repository": "https://github.com/tighug/achernar-dso-app.git",
+  "author": "tighug <kapuriko123@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron --no-sandbox main.js"
+  },
+  "devDependencies": {
+    "electron": "^11.1.1"
+  }
+}
