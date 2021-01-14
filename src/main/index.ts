@@ -10,7 +10,7 @@ function createWindow() {
   });
 
   if (process.env.NODE_ENV === "development") {
-    win.loadFile("http://localhost:3000/index.html");
+    win.loadURL("http://localhost:3000/index.html");
   } else {
     win.loadFile("index.html");
   }
