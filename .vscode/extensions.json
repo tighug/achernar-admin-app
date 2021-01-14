@@ -5,7 +5,8 @@
     "editorconfig.editorconfig",
     "christian-kohler.npm-intellisense",
     "mikestead.dotenv",
-    "ms-azuretools.vscode-docker"
+    "ms-azuretools.vscode-docker",
+    "dsznajder.es7-react-js-snippets"
   ],
   "unwantedRecommendations": []
 }

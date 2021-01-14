@@ -12,13 +12,14 @@
     "terminal.integrated.shell.linux": "/bin/zsh"
   },
   "extensions": [
-    "esbenp.prettier-vscode",
-    "dbaeumer.vscode-eslint",
-    "editorconfig.editorconfig",
-    "christian-kohler.npm-intellisense",
-    "mikestead.dotenv",
-    "ms-azuretools.vscode-docker"
-  ],
+	"esbenp.prettier-vscode",
+	"dbaeumer.vscode-eslint",
+	"editorconfig.editorconfig",
+	"christian-kohler.npm-intellisense",
+	"mikestead.dotenv",
+	"ms-azuretools.vscode-docker",
+	"dsznajder.es7-react-js-snippets"
+],
   "mounts": [
     "source=achernar-dso-app-node_modules,target=${containerWorkspaceFolder}/node_modules,type=volume"
   ]
