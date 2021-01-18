@@ -18,7 +18,8 @@
 	"christian-kohler.npm-intellisense",
 	"mikestead.dotenv",
 	"ms-azuretools.vscode-docker",
-	"dsznajder.es7-react-js-snippets"
+	"dsznajder.es7-react-js-snippets",
+	"jpoissonnier.vscode-styled-components"
 ],
   "mounts": [
     "source=achernar-dso-app-node_modules,target=${containerWorkspaceFolder}/node_modules,type=volume"

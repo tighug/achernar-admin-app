@@ -1,13 +1,13 @@
-import path from "path";
 import { Configuration } from "webpack";
 import HtmlWebpackPlugin from "html-webpack-plugin";
+import Dotenv from "dotenv-webpack";
 
 export const main: Configuration = {
   target: "electron-main",
 
-  entry: path.join(__dirname, "../src/main/index.ts"),
+  entry: "./src/main/index.ts",
   output: {
-    path: path.join(__dirname, "../dist"),
+    path: `${__dirname}/dist`,
     filename: "main.js",
   },
 
@@ -16,31 +16,37 @@ export const main: Configuration = {
       {
         test: /\.ts$/,
         exclude: /node_modules/,
-        use: "ts-loader",
+        loader: "babel-loader",
+        options: {
+          presets: ["@babel/preset-typescript"],
+          plugins: [
+            "@babel/proposal-class-properties",
+            "@babel/proposal-object-rest-spread",
+          ],
+        },
       },
     ],
   },
 
   resolve: {
-    extensions: [".ts"],
+    extensions: [".ts", ".js"],
   },
 };
 
 export const renderer: Configuration = {
   target: "electron-renderer",
 
-  entry: path.join(__dirname, "../src/renderer/index.tsx"),
+  entry: "./src/renderer/index.tsx",
   output: {
-    path: path.join(__dirname, "../dist"),
+    path: `${__dirname}/dist`,
     filename: "renderer.js",
   },
 
   module: {
     rules: [
       {
-        test: /\.(ts|tsx)$/,
-        exclude: /node_modules/,
-        use: "ts-loader",
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"],
       },
     ],
   },
@@ -51,7 +57,8 @@ export const renderer: Configuration = {
 
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, "../public/index.html"),
+      template: "./src/renderer/index.html",
     }),
+    new Dotenv(),
   ],
 };
