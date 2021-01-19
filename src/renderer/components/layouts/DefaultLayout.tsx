@@ -8,7 +8,7 @@ type DefaultLayoutProps = {
 
 export default function DefaultLayout({ side, main }: DefaultLayoutProps) {
   return (
-    <SplitPane split="vertical" minSize={100} maxSize={400} defaultSize={250}>
+    <SplitPane split="vertical" minSize={200} maxSize={200} defaultSize={200}>
       {side}
       {main}
     </SplitPane>
