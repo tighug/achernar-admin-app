@@ -1,8 +1,14 @@
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, ipcMain } from "electron";
 import installExtension, {
   REACT_DEVELOPER_TOOLS,
   REDUX_DEVTOOLS,
 } from "electron-devtools-installer";
+import Store from "electron-store";
+
+const store = new Store();
+
+ipcMain.handle("save", async (event, key, value) => store.set(key, value));
+ipcMain.handle("find", async (event, key) => store.get(key));
 
 async function createWindow() {
   const win = new BrowserWindow({
@@ -10,9 +16,9 @@ async function createWindow() {
     height: 800,
     backgroundColor: "#272727",
     webPreferences: {
-      devTools: true,
-      nodeIntegration: true,
       contextIsolation: true,
+      worldSafeExecuteJavaScript: true,
+      preload: `${__dirname}/preload.js`,
     },
   });
 
