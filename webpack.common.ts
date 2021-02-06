@@ -4,13 +4,15 @@ import Dotenv from "dotenv-webpack";
 
 export const main: Configuration = {
   target: "electron-main",
-
-  entry: "./src/main/index.ts",
+  name: "main",
+  entry: {
+    preload: "./src/main/preload.ts",
+    main: "./src/main/index.ts",
+  },
   output: {
     path: `${__dirname}/dist`,
-    filename: "main.js",
+    filename: "[name].js",
   },
-
   module: {
     rules: [
       {
@@ -27,7 +29,6 @@ export const main: Configuration = {
       },
     ],
   },
-
   resolve: {
     extensions: [".ts", ".js"],
   },
@@ -35,13 +36,12 @@ export const main: Configuration = {
 
 export const renderer: Configuration = {
   target: "electron-renderer",
-
+  name: "renderer",
   entry: "./src/renderer/index.tsx",
   output: {
     path: `${__dirname}/dist`,
     filename: "renderer.js",
   },
-
   module: {
     rules: [
       {
@@ -50,11 +50,9 @@ export const renderer: Configuration = {
       },
     ],
   },
-
   resolve: {
     extensions: [".ts", ".tsx", ".js"],
   },
-
   plugins: [
     new HtmlWebpackPlugin({
       template: "./src/renderer/index.html",
