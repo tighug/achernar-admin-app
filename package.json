@@ -1,16 +1,14 @@
 {
   "name": "achernar-dso-app",
   "version": "0.1.0",
-  "main": "main.js",
   "repository": "https://github.com/tighug/achernar-dso-app.git",
   "author": "tighug <kapuriko123@gmail.com>",
   "license": "MIT",
   "scripts": {
     "build": "webpack -c ./webpack.prod.ts",
-    "dev": "yarn dev:renderer",
-    "dev:renderer": "webpack serve -c ./webpack.dev.ts",
-    "dev:main": "cross-env NODE_ENV=development electron -r ./util/register.js ./src/main/index.ts",
-    "prestart": "yarn build",
+    "build:dev": "webpack -c ./webpack.dev.ts --config-name main",
+    "dev": "webpack serve -c ./webpack.dev.ts",
+    "dev:main": "cross-env NODE_ENV=development electron ./dist/main.js",
     "start": "cross-env NODE_ENV=producton electron ./dist/main.js"
   },
   "devDependencies": {
@@ -26,6 +24,7 @@
     "@types/react-dom": "^17.0.0",
     "@types/react-redux": "^7.1.15",
     "@types/styled-components": "^5.1.7",
+    "@types/webpack-dev-server": "^3.11.1",
     "@typescript-eslint/eslint-plugin": "^4.13.0",
     "@typescript-eslint/parser": "^4.13.0",
     "babel-loader": "^8.2.2",
@@ -51,10 +50,13 @@
   },
   "dependencies": {
     "@material-ui/core": "^4.11.2",
+    "@material-ui/data-grid": "^4.0.0-alpha.18",
+    "@material-ui/icons": "^4.11.2",
     "@reduxjs/toolkit": "^1.5.0",
     "axios": "^0.21.1",
     "cross-env": "^7.0.3",
     "dotenv": "^8.2.0",
+    "electron-store": "^7.0.0",
     "konva": "^7.2.2",
     "normalize.css": "^8.0.1",
     "react": "^17.0.1",
@@ -63,8 +65,6 @@
     "react-konva": "^17.0.1-3",
     "react-redux": "^7.2.2",
     "react-refresh": "^0.9.0",
-    "react-sizeme": "^2.6.12",
-    "react-split-pane": "^0.1.92",
     "redux": "^4.0.5",
     "styled-components": "^5.2.1"
   }
