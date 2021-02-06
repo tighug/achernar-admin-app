@@ -5,9 +5,9 @@ type AppFormControlProps = {
   children?: ReactNode;
 };
 
-export default function AppFormControl({ children }: AppFormControlProps) {
+export function AppFormControl({ children }: AppFormControlProps) {
   return (
-    <FormControl variant="outlined" margin="dense" fullWidth>
+    <FormControl variant="filled" margin="dense" fullWidth>
       {children}
     </FormControl>
   );
