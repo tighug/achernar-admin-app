@@ -1,14 +1,20 @@
-import { FormControl } from "@material-ui/core";
-import React, { ReactNode } from "react";
+import { FormControl, FormControlProps } from "@material-ui/core";
+import React from "react";
 
-type AppFormControlProps = {
-  children?: ReactNode;
-};
+type AppFormControlProps = FormControlProps;
 
-export function AppFormControl({ children }: AppFormControlProps) {
+export function AppFormControl({
+  fullWidth = true,
+  margin = "dense",
+  variant = "outlined",
+  ...props
+}: AppFormControlProps) {
   return (
-    <FormControl variant="filled" margin="dense" fullWidth>
-      {children}
-    </FormControl>
+    <FormControl
+      fullWidth={fullWidth}
+      margin={margin}
+      variant={variant}
+      {...props}
+    />
   );
 }
