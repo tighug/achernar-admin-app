@@ -1,26 +1,26 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { Case, getCases } from "../api/flowAPI";
 
-export type Case = {
-  networkNum: number;
-  feederNum: number;
+export const fetchCases = createAsyncThunk(
+  "cases/fetchCases",
+  async (feederId: number): Promise<Case[]> => await getCases(feederId)
+);
+
+type State = {
+  cases: Case[];
 };
 
 export const caseSlice = createSlice({
   name: "cases",
   initialState: {
-    networkNum: 1,
-    feederNum: 1,
-  } as Case,
-  reducers: {
-    setNetworkNum(state, action: PayloadAction<number>) {
-      state.networkNum = action.payload;
-      state.feederNum = 1;
-    },
-    setFeederNum(state, action: PayloadAction<number>) {
-      state.feederNum = action.payload;
-    },
+    cases: [],
+  } as State,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(fetchCases.fulfilled, (state, action) => {
+      state.cases = action.payload;
+    });
   },
 });
 
-export const { setNetworkNum, setFeederNum } = caseSlice.actions;
 export default caseSlice.reducer;

@@ -1,33 +1,24 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
-import { Feeder } from "./feeders";
-
-const api = axios.create({ baseURL: process.env.FLOW_API_URL });
-
-export type Node = {
-  id: number;
-  feeder: Feeder;
-  num: number;
-  posX: number;
-  posY: number;
-  hasLoad: boolean;
-};
+import { Node, getNodes } from "../api/flowAPI";
 
 export const fetchNodes = createAsyncThunk(
   "nodes/fetchNodes",
-  async (feederId: number): Promise<Node[]> => {
-    const res = await api.get("/nodes", { params: { feederId } }); // TODO: Add error handling
-    return res.data.nodes;
-  }
+  async (feederId: number): Promise<Node[]> => await getNodes(feederId)
 );
+
+type State = {
+  nodes: Node[];
+};
 
 const nodeSlice = createSlice({
   name: "nodes",
-  initialState: [] as Node[],
+  initialState: {
+    nodes: [],
+  } as State,
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchNodes.fulfilled, (state, action) => {
-      return action.payload;
+      state.nodes = action.payload;
     });
   },
 });
