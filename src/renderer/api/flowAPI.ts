@@ -37,6 +37,19 @@ export type Case = {
   minute: number;
   pvCount: number;
   pvScale: number;
+  loadScale: number;
+  baseV: number;
+  seed: number;
+};
+
+export type RegisterCaseInput = {
+  feederId: number;
+  hour: number;
+  minute: number;
+  pvCount: number;
+  pvScale: number;
+  loadScale: number;
+  baseV: number;
   seed: number;
 };
 
@@ -75,13 +88,31 @@ export async function getLines(feederId: number): Promise<Line[]> {
 }
 
 export async function getCases(feederId: number): Promise<Case[]> {
-  const cases = await cache.find<Case[] | undefined>(`cases${feederId}`);
-  if (cases === undefined) {
-    const { data } = await api.get<{ cases: Case[] }>(
-      `/feeders/${feederId}/cases?fields=id,hour,minute,pvCount,pcScale,loadScale,seed,baseV,status`
-    );
-    await cache.save(`cases${feederId}`, data.cases);
-    return data.cases;
-  }
-  return cases;
+  const { data } = await api.get<{ cases: Case[] }>(
+    `/feeders/${feederId}/cases?fields=id,hour,minute,pvCount,pvScale,loadScale,seed,baseV,status`
+  );
+  return data.cases;
+}
+
+export async function registerCase(props: {
+  feederId: number;
+  hour: number;
+  minute: number;
+  pvCount: number;
+  pvScale: number;
+  loadScale: number;
+  baseV: number;
+  seed: number;
+}): Promise<Case> {
+  const { data } = await api.post<{ case: Case }>("/cases", props);
+  return data.case;
+}
+
+export async function deleteCase(id: number): Promise<number> {
+  await api.delete(`/cases/${id}`);
+  return id;
+}
+
+export async function simCase(id: number): Promise<void> {
+  await api.post(`/cases/${id}/jobs`);
 }
