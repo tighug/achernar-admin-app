@@ -3,12 +3,15 @@ import { Configuration } from "webpack";
 import { spawn } from "child_process";
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin";
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
-import { renderer } from "./webpack.common";
+import { main, renderer } from "./webpack.common";
 
-const rendererDev = merge(renderer, {
+const mainDev = merge(main, {
+  mode: "development",
+});
+
+const rendererDev: Configuration = merge(renderer, {
   mode: "development",
   target: "web",
-
   module: {
     rules: [
       {
@@ -30,16 +33,13 @@ const rendererDev = merge(renderer, {
       },
     ],
   },
-
   plugins: [new ForkTsCheckerWebpackPlugin(), new ReactRefreshWebpackPlugin()],
-
   devServer: {
     port: 3000,
     contentBase: `${__dirname}/src/renderer`,
     hot: true,
     noInfo: true,
     quiet: true,
-
     before() {
       spawn("yarn", ["dev:main"], {
         shell: true,
@@ -48,6 +48,6 @@ const rendererDev = merge(renderer, {
       }).on("error", (spawnError) => console.error(spawnError));
     },
   },
-} as Configuration);
+});
 
-export default rendererDev;
+export default [mainDev, rendererDev];
