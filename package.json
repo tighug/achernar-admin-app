@@ -26,6 +26,7 @@
     "@types/react-redux": "^7.1.15",
     "@types/styled-components": "^5.1.7",
     "@types/webpack-dev-server": "^3.11.1",
+    "@types/ws": "^7.4.0",
     "@typescript-eslint/eslint-plugin": "^4.13.0",
     "@typescript-eslint/parser": "^4.13.0",
     "babel-loader": "^8.2.2",
@@ -68,6 +69,7 @@
     "react-redux": "^7.2.2",
     "react-refresh": "^0.9.0",
     "redux": "^4.0.5",
-    "styled-components": "^5.2.1"
+    "styled-components": "^5.2.1",
+    "ws": "^7.4.3"
   }
 }
