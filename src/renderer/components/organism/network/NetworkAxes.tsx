@@ -10,7 +10,7 @@ export type NetworkAxesProps = {
   scale: number;
 };
 
-export default function NetworkAxes({
+export function NetworkAxes({
   offset,
   length,
   minX,

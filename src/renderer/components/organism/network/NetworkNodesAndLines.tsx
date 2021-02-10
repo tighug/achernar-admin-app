@@ -1,7 +1,6 @@
 import React from "react";
 import { Layer, Circle, Line as L } from "react-konva";
-import { Node } from "../../store/nodes";
-import { Line } from "../../store/lines";
+import { Line, Node } from "../../../api/flowAPI";
 
 type NetworkNodesProps = {
   nodes: Node[];
@@ -13,7 +12,7 @@ type NetworkNodesProps = {
   scale: number;
 };
 
-export default function NetworkNodesAndLines({
+export function NetworkNodesAndLines({
   nodes,
   lines,
   length,
