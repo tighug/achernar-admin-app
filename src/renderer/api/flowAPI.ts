@@ -40,6 +40,7 @@ export type Case = {
   loadScale: number;
   baseV: number;
   seed: number;
+  status: string;
 };
 
 export type RegisterCaseInput = {
@@ -51,6 +52,22 @@ export type RegisterCaseInput = {
   loadScale: number;
   baseV: number;
   seed: number;
+};
+
+export type Load = {
+  id: number;
+  case: Case;
+  node: Node;
+  val: number;
+  type: string;
+};
+
+export type Flow = {
+  id: number;
+  line: Line;
+  nextNodeP: number;
+  nextNodeV: number;
+  lineI: number;
 };
 
 export async function getFeeders(): Promise<Feeder[]> {
@@ -115,4 +132,25 @@ export async function deleteCase(id: number): Promise<number> {
 
 export async function simCase(id: number): Promise<void> {
   await api.post(`/cases/${id}/jobs`);
+}
+
+export async function getLoads(caseId: number): Promise<Load[]> {
+  const { data } = await api.get<{ loads: Load[] }>(
+    `/cases/${caseId}/loads?type=load&fields=id,node,num,val`
+  );
+  return data.loads;
+}
+
+export async function getPVs(caseId: number): Promise<Load[]> {
+  const { data } = await api.get<{ loads: Load[] }>(
+    `/cases/${caseId}/loads?type=pv&fields=id,node,num,val`
+  );
+  return data.loads;
+}
+
+export async function getFlows(caseId: number): Promise<Flow[]> {
+  const { data } = await api.get<{ flows: Flow[] }>(
+    `/cases/${caseId}/flows?before=true&fields=id,line,nextNode,num,nextNodeP,nextNodeV,lineI`
+  );
+  return data.flows;
 }

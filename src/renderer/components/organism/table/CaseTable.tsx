@@ -70,7 +70,7 @@ export function CaseTable({ height }: CaseTableProps) {
       field: "time",
       headerName: "Time",
       flex: 1,
-      valueGetter: (params) =>
+      valueGetter: (params: ValueFormatterParams) =>
         `${formatTime(params.getValue("hour") as number)}:${formatTime(
           params.getValue("minute") as number
         )}`,
@@ -87,7 +87,9 @@ export function CaseTable({ height }: CaseTableProps) {
       renderCell: renderStatus,
     },
     { field: "Delete", flex: 1, renderCell: renderDelete },
-  ];
+  ].map((column) => {
+    return { ...column, disableClickEventBubbling: true };
+  });
 
   return (
     <div style={{ height: `${height}px` }}>

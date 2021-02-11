@@ -23,7 +23,9 @@ export function LineTable({ height }: LineTableProps) {
     { field: "lengthM", headerName: "Length [m]", type: "number", flex: 1 },
     { field: "rOhmPerKm", headerName: "R [Ω/km]", type: "number", flex: 1 },
     { field: "xOhmPerKm", headerName: "X [Ω/km]", type: "number", flex: 1 },
-  ];
+  ].map((column) => {
+    return { ...column, disableClickEventBubbling: true };
+  });
 
   return (
     <div style={{ height: `${height}px` }}>

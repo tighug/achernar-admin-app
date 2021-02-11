@@ -4,9 +4,11 @@ import { AppFormControl } from "../atom/AppFormControl";
 
 export type AppSelectProps = {
   options: Array<number | string>;
+  nullable?: boolean;
 } & SelectProps;
 
 export function AppSelect({
+  nullable = false,
   label,
   labelId,
   onChange,
@@ -24,6 +26,7 @@ export function AppSelect({
         label={label}
         {...props}
       >
+        {nullable && <MenuItem value={undefined}>None</MenuItem>}
         {options.map((n) => (
           <MenuItem value={n} key={n}>
             {n}

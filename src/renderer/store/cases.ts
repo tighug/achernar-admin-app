@@ -30,6 +30,7 @@ export const simulateCase = createAsyncThunk(
 
 type State = {
   cases: Case[];
+  caseId?: number;
   hour: number;
   minute: number;
   pvScale: number;
@@ -43,6 +44,7 @@ export const caseSlice = createSlice({
   name: "cases",
   initialState: {
     cases: [],
+    caseId: undefined,
     hour: 0,
     minute: 0,
     pvScale: 1,
@@ -52,6 +54,9 @@ export const caseSlice = createSlice({
     seed: 0,
   } as State,
   reducers: {
+    setCaseId(state, action: PayloadAction<number | undefined>) {
+      state.caseId = action.payload;
+    },
     setHour(state, action: PayloadAction<number>) {
       state.hour = action.payload;
     },
@@ -73,9 +78,9 @@ export const caseSlice = createSlice({
     setSeed(state, action: PayloadAction<number>) {
       state.seed = action.payload;
     },
-    updateStatus(state, action: PayloadAction<string>) {
+    updateStatus(state, action: PayloadAction<{ id: number; status: string }>) {
       console.log(action.payload);
-      const { id, status } = JSON.parse(action.payload);
+      const { id, status } = action.payload;
       state.cases = state.cases.map((c) =>
         c.id === id ? { ...c, status } : c
       );
@@ -95,6 +100,7 @@ export const caseSlice = createSlice({
 });
 
 export const {
+  setCaseId,
   setHour,
   setMinute,
   setPvScale,

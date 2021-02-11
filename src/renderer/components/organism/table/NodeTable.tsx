@@ -1,5 +1,5 @@
 import React from "react";
-import { ColDef, DataGrid } from "@material-ui/data-grid";
+import { ColDef, DataGrid, ValueFormatterParams } from "@material-ui/data-grid";
 import { useSelector } from "react-redux";
 import { Chip } from "@material-ui/core";
 
@@ -17,7 +17,7 @@ export function NodeTable({ height }: NodeTableProps) {
       field: "hasLoad",
       headerName: "Load",
       flex: 1,
-      renderCell: function load(params) {
+      renderCell: function load(params: ValueFormatterParams) {
         return (
           <Chip
             size="small"
@@ -29,7 +29,9 @@ export function NodeTable({ height }: NodeTableProps) {
         );
       },
     },
-  ];
+  ].map((column) => {
+    return { ...column, disableClickEventBubbling: true };
+  });
 
   return (
     <div style={{ height: `${height}px` }}>
