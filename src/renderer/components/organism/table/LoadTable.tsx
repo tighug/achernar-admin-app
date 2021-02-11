@@ -9,10 +9,7 @@ export type LoadTableProps = {
 export function LoadTable({ height }: LoadTableProps) {
   const { loads } = useSelector((s) => s.loads);
   const modLoads = loads.map(({ node, ...props }) => {
-    return {
-      nodeNum: node.num,
-      ...props,
-    };
+    return { nodeNum: node.num, ...props };
   });
   const columns: ColDef[] = [
     { field: "nodeNum", headerName: "Node Num", type: "number", flex: 1 },
