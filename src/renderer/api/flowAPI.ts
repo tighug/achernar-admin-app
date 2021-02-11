@@ -62,6 +62,14 @@ export type Load = {
   type: string;
 };
 
+export type Flow = {
+  id: number;
+  line: Line;
+  nextNodeP: number;
+  nextNodeV: number;
+  lineI: number;
+};
+
 export async function getFeeders(): Promise<Feeder[]> {
   const feeders = await cache.find<Feeder[] | undefined>("feeders");
   if (feeders === undefined) {
@@ -138,4 +146,11 @@ export async function getPVs(caseId: number): Promise<Load[]> {
     `/cases/${caseId}/loads?type=pv&fields=id,node,num,val`
   );
   return data.loads;
+}
+
+export async function getFlows(caseId: number): Promise<Flow[]> {
+  const { data } = await api.get<{ flows: Flow[] }>(
+    `/cases/${caseId}/flows?before=true&fields=id,line,nextNode,num,nextNodeP,nextNodeV,lineI`
+  );
+  return data.flows;
 }

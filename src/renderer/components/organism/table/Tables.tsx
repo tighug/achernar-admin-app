@@ -1,6 +1,7 @@
 import { Grid } from "@material-ui/core";
 import {
   blue,
+  cyan,
   deepOrange,
   green,
   orange,
@@ -17,6 +18,7 @@ import { NodeTable } from "./NodeTable";
 import { setCaseId } from "../../../store/cases";
 import { LoadTable } from "./LoadTable";
 import { PVTable } from "./PVTable";
+import FlowTable from "./FlowTable";
 
 const height = 500;
 
@@ -83,10 +85,20 @@ export function Tables() {
       </Grid>
     </>
   );
+  const flows = (
+    <>
+      <Grid item xs={12}>
+        <AppPanel icon="sync_alt" color={cyan[500]} title="Flows">
+          <FlowTable height={height} />
+        </AppPanel>
+      </Grid>
+    </>
+  );
   const renderTables = () => {
     if (selected === "nodes") return nodes;
     else if (selected === "cases") return cases;
     else if (selected === "loads") return loads;
+    else if (selected === "flows") return flows;
   };
 
   return <>{renderTables()}</>;

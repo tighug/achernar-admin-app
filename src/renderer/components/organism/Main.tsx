@@ -11,6 +11,7 @@ import { Widgets } from "./Widgets";
 import { Tables } from "./table/Tables";
 import { updateStatus } from "../../store/cases";
 import { fetchLoads, fetchPVs } from "../../store/loads";
+import { fetchFlows } from "../../store/flows";
 
 export function Main() {
   const { feeder } = useSelector((s) => s.feeders);
@@ -38,6 +39,7 @@ export function Main() {
       if (matched.status === "completed") {
         dispatch(fetchLoads(matched.id));
         dispatch(fetchPVs(matched.id));
+        dispatch(fetchFlows(matched.id));
       }
     }
   }, [cases, caseId]);

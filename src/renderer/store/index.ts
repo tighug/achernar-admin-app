@@ -6,6 +6,7 @@ import lines from "./lines";
 import cases from "./cases";
 import widgets from "./widgets";
 import loads from "./loads";
+import flows from "./flows";
 
 const reducer = combineReducers({
   feeders,
@@ -14,6 +15,7 @@ const reducer = combineReducers({
   cases,
   widgets,
   loads,
+  flows,
 });
 const configuredStore = configureStore({ reducer });
 
