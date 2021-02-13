@@ -13,7 +13,7 @@ export type PanelProps = {
 };
 
 export function AppPanel({ action, children, icon, color, title }: PanelProps) {
-  const renderIcon = icon && <StyledIcon iconcolor={color}>{icon}</StyledIcon>;
+  const renderIcon = icon && <AppIcon color={color}>{icon}</AppIcon>;
   return (
     <AppCard>
       {title && (
@@ -30,11 +30,7 @@ export function AppPanel({ action, children, icon, color, title }: PanelProps) {
   );
 }
 
-const StyledIcon = styled(AppIcon)<{ iconcolor?: string }>`
-  color: ${(props) => props.iconcolor};
-  margin-right: 10px;
-`;
-
 const Title = styled.div`
+  margin-left: 10px;
   flex-grow: 1;
 `;
