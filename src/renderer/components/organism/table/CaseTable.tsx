@@ -34,7 +34,7 @@ export function CaseTable({ height }: CaseTableProps) {
       <div style={{ display: "flex", alignItems: "center" }}>
         <AppChip
           size="small"
-          label={status}
+          label={status === "active" ? "in processing" : status}
           variant="outlined"
           color={color()}
         />
