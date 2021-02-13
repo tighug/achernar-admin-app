@@ -9,7 +9,7 @@ export default createMuiTheme({
     },
     background: {
       default: "#1E2126",
-      paper: "#23272E",
+      paper: "#272b33",
     },
   },
 });
