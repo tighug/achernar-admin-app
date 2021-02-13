@@ -1,0 +1,37 @@
+productName: "Achernar"
+appId: "com.example.app"
+files:
+  - "dist/"
+  - "node_modules/"
+  - "index.html"
+  - "main.js"
+  - "main.js.LICENSE.txt"
+  - "preload.js"
+  - "renderer.js"
+  - "renderer.js.LICENSE.txt"
+  - "package.json"
+directories:
+  buildResources: "resources"
+  output: "release"
+publish:
+  provider: "github"
+  owner: "tighug"
+  repo: "achernar-admin-app"
+  private: false
+win:
+  target:
+    - "nsis"
+    - "msi"
+dmg:
+  contents:
+    - x: 130
+      y: 220
+    - x: 410
+      y: 220
+      type: "link"
+      path: "/Applications"
+linux:
+  target:
+    - "deb"
+    - "AppImage"
+  category: "Development"
