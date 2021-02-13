@@ -1,12 +1,10 @@
 import React from "react";
 import { Stage } from "react-konva";
 import { useSelector } from "react-redux";
-import styled from "styled-components";
+import styled, { useTheme } from "styled-components";
+import { AppPanel } from "../../molecule/AppPanel";
 import { NetworkAxes } from "./NetworkAxes";
 import { NetworkNodesAndLines } from "./NetworkNodesAndLines";
-
-const length = 450;
-const offset = 70;
 
 type NetworkDiagramProps = {
   children?: never;
@@ -15,8 +13,14 @@ type NetworkDiagramProps = {
 };
 
 export function NetworkDiagram({ width, height }: NetworkDiagramProps) {
-  const { nodes } = useSelector((state) => state.nodes);
-  const { lines } = useSelector((state) => state.lines);
+  const offset = 70;
+  const length = width - offset - 5;
+  const theme = useTheme();
+  const { nodes } = useSelector((s) => s.nodes);
+  const { lines } = useSelector((s) => s.lines);
+  const { flows } = useSelector((s) => s.flows);
+  const { loads, pvs } = useSelector((s) => s.loads);
+  const diagrams = useSelector((s) => s.diagrams);
 
   const posXs = nodes.map((n) => n.posX);
   const posYs = nodes.map((n) => n.posY);
@@ -26,25 +30,35 @@ export function NetworkDiagram({ width, height }: NetworkDiagramProps) {
   const maxH = maxY - minY;
   const scale = maxW >= maxH ? length / maxW : length / maxH;
 
+  const modNodes = nodes.map(({ id, num, posX, posY }) => ({
+    id,
+    num,
+    x: offset + (posX - minX) * scale,
+    y: length - (posY - minY) * scale,
+  }));
+
   return (
-    <StyledStage width={width} height={height}>
-      <NetworkAxes
-        offset={offset}
-        length={length}
-        minX={minX}
-        minY={minY}
-        scale={scale}
-      />
-      <NetworkNodesAndLines
-        nodes={nodes}
-        lines={lines}
-        length={length}
-        offset={offset}
-        minX={minX}
-        minY={minY}
-        scale={scale}
-      />
-    </StyledStage>
+    <AppPanel>
+      <StyledStage width={width} height={height}>
+        <NetworkAxes
+          offset={offset}
+          length={length}
+          minX={minX}
+          minY={minY}
+          scale={scale}
+          theme={theme}
+        />
+        <NetworkNodesAndLines
+          modNodes={modNodes}
+          lines={lines}
+          loads={loads}
+          pvs={pvs}
+          flows={flows}
+          diagramState={diagrams}
+          theme={theme}
+        />
+      </StyledStage>
+    </AppPanel>
   );
 }
 
