@@ -1,12 +1,5 @@
 import { Grid } from "@material-ui/core";
-import {
-  blue,
-  cyan,
-  deepOrange,
-  green,
-  orange,
-  yellow,
-} from "@material-ui/core/colors";
+import { blue, cyan, green, orange, yellow } from "@material-ui/core/colors";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppPanel } from "../../molecule/AppPanel";
@@ -51,7 +44,7 @@ export function Tables() {
         </AppPanel>
       </Grid>
       <Grid item xs={12} xl={7}>
-        <AppPanel icon="linear_scale" color={blue[500]} title="Lines">
+        <AppPanel icon="show_chart" color={blue[500]} title="Lines">
           <LineTable height={height} />
         </AppPanel>
       </Grid>
@@ -79,7 +72,7 @@ export function Tables() {
         </AppPanel>
       </Grid>
       <Grid item xs={6}>
-        <AppPanel icon="brightness_7" color={deepOrange[500]} title="PVs">
+        <AppPanel icon="brightness_7" color={green[500]} title="PVs">
           <PVTable height={height} />
         </AppPanel>
       </Grid>
