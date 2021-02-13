@@ -49,6 +49,7 @@ export function Widgets() {
           icon="emoji_objects"
           title="Loads & PVs"
           onClick={() => clickHandler("loads")}
+          disabled={loadCount === 0}
         >
           {loadCount} / {pvCount}
         </AppWidget>
@@ -60,6 +61,7 @@ export function Widgets() {
           icon="sync_alt"
           title="Flows"
           onClick={() => clickHandler("flows")}
+          disabled={loadCount === 0}
         >
           {flowCount}
         </AppWidget>

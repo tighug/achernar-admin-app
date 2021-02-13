@@ -9,7 +9,7 @@ export default function Selects() {
   const dispatch = useDispatch();
 
   return (
-    <Grid container justify="flex-end" spacing={2}>
+    <Grid container justify="flex-start" spacing={2}>
       <Grid item xs={2}>
         <AppSelect
           label="Network"

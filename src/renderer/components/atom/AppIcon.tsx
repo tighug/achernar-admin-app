@@ -6,19 +6,22 @@ import styled from "styled-components";
 export type AppIconProps = {
   left?: boolean;
   right?: boolean;
-} & IconProps;
+  color?: string;
+} & Omit<IconProps, "color">;
 
 export function AppIcon({
   left = false,
   right = false,
+  color,
   ...props
 }: AppIconProps) {
   const className = classnames({ right, left });
 
-  return <StyledIcon className={className} {...props} />;
+  return <StyledIcon className={className} iconcolor={color} {...props} />;
 }
 
-const StyledIcon = styled(Icon)`
+const StyledIcon = styled(Icon)<{ iconcolor?: string }>`
+  color: ${({ iconcolor }) => iconcolor};
   &.right {
     width: 1em;
     height: 1em;

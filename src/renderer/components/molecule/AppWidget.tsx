@@ -1,14 +1,15 @@
 import { CardContent, Typography } from "@material-ui/core";
-import Icon from "@material-ui/core/Icon";
 import React, { MouseEventHandler, ReactNode } from "react";
 import styled from "styled-components";
 import classnames from "classnames";
 import { AppCard } from "../atom/AppCard";
 import { AppRipples } from "../atom/AppRipples";
+import { AppIcon } from "../atom/AppIcon";
 
 export type AppWidgetProps = {
   active?: boolean;
   ripple?: boolean;
+  disabled?: boolean;
 
   children: ReactNode;
   color?: string;
@@ -20,19 +21,20 @@ export type AppWidgetProps = {
 export function AppWidget({
   active = false,
   ripple = true,
+  disabled = false,
   children,
   color,
   icon = "help",
   onClick,
   title,
 }: AppWidgetProps) {
-  const className = classnames({ active });
+  const className = classnames({ active, disabled });
   return (
     <AppRipples disabled={!ripple}>
       <StyledAppCard className={className} onClick={onClick}>
         <StyledContent>
           <Left>
-            <StyledIcon iconcolor={color}>{icon}</StyledIcon>
+            <StyledIcon color={color}>{icon}</StyledIcon>
           </Left>
           <Right>
             <Typography variant="subtitle1">{title}</Typography>
@@ -69,6 +71,12 @@ const StyledAppCard = styled(AppCard)`
       opacity: 0.14;
     }
   }
+
+  &.disabled {
+    color: ${({ theme }) => theme.palette.text.disabled};
+    pointer-events: none;
+    box-shadow: none;
+  }
 `;
 
 const StyledContent = styled(CardContent)`
@@ -87,7 +95,6 @@ const Right = styled.div`
   text-align: right;
 `;
 
-const StyledIcon = styled(Icon)<{ iconcolor?: string }>`
-  color: ${(props) => props.iconcolor};
+const StyledIcon = styled(AppIcon)`
   font-size: 56px;
 `;

@@ -7,6 +7,7 @@ import cases from "./cases";
 import widgets from "./widgets";
 import loads from "./loads";
 import flows from "./flows";
+import diagrams from "./diagrams";
 
 const reducer = combineReducers({
   feeders,
@@ -16,6 +17,7 @@ const reducer = combineReducers({
   widgets,
   loads,
   flows,
+  diagrams,
 });
 const configuredStore = configureStore({ reducer });
 

@@ -6,12 +6,12 @@ import { fetchFeeders } from "../../store/feeders";
 import { fetchNodes } from "../../store/nodes";
 import { fetchLines } from "../../store/lines";
 import { fetchCases } from "../../store/cases";
-import { AppPanel } from "../molecule/AppPanel";
 import { Widgets } from "./Widgets";
 import { Tables } from "./table/Tables";
 import { updateStatus } from "../../store/cases";
-import { fetchLoads, fetchPVs } from "../../store/loads";
-import { fetchFlows } from "../../store/flows";
+import { fetchLoads, fetchPVs, resetLoads } from "../../store/loads";
+import { fetchFlows, resetFlows } from "../../store/flows";
+import { Filters } from "./Filters";
 
 export function Main() {
   const { feeder } = useSelector((s) => s.feeders);
@@ -40,17 +40,24 @@ export function Main() {
         dispatch(fetchLoads(matched.id));
         dispatch(fetchPVs(matched.id));
         dispatch(fetchFlows(matched.id));
+      } else {
+        dispatch(resetFlows());
+        dispatch(resetLoads());
       }
+    } else {
+      dispatch(resetFlows());
+      dispatch(resetLoads());
     }
   }, [cases, caseId]);
 
   return (
     <Container maxWidth="xl">
       <Grid container justify="space-around" alignItems="stretch" spacing={3}>
-        <Grid item xs={12}>
-          <AppPanel>
-            <NetworkDiagram width={500} height={500} />
-          </AppPanel>
+        <Grid item xs={8}>
+          <NetworkDiagram width={500} height={500} />
+        </Grid>
+        <Grid item xs={4}>
+          <Filters />
         </Grid>
         <Widgets />
         <Tables />

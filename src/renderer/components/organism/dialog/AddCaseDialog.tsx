@@ -55,14 +55,11 @@ export function AddCaseDialog() {
               Cancel
             </CancelButton>
             <AppButton
-              variant="outlined"
+              variant="contained"
               color="primary"
               onClick={registerHandler}
             >
               Register
-            </AppButton>
-            <AppButton variant="contained" color="primary">
-              Register & Simulate
             </AppButton>
           </CardActions>
         </StyledAppCard>
