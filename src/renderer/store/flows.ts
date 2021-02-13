@@ -15,7 +15,11 @@ const flowSlice = createSlice({
   initialState: {
     flows: [],
   } as State,
-  reducers: {},
+  reducers: {
+    resetFlows: (state) => {
+      state.flows = [];
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchFlows.fulfilled, (state, action) => {
       state.flows = action.payload;
@@ -23,4 +27,5 @@ const flowSlice = createSlice({
   },
 });
 
+export const { resetFlows } = flowSlice.actions;
 export default flowSlice.reducer;

@@ -22,7 +22,12 @@ const loadSlice = createSlice({
     loads: [],
     pvs: [],
   } as State,
-  reducers: {},
+  reducers: {
+    resetLoads: (state) => {
+      state.loads = [];
+      state.pvs = [];
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchLoads.fulfilled, (state, action) => {
       state.loads = action.payload;
@@ -33,4 +38,5 @@ const loadSlice = createSlice({
   },
 });
 
+export const { resetLoads } = loadSlice.actions;
 export default loadSlice.reducer;
