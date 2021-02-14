@@ -28,7 +28,7 @@ async function createWindow() {
     await win.loadURL("http://localhost:3000/index.html");
     win.webContents.toggleDevTools();
   } else {
-    win.loadFile("index.html");
+    win.loadFile(`${__dirname}/index.html`);
   }
 }
 
