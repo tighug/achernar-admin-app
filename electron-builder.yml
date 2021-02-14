@@ -1,5 +1,5 @@
 productName: "Achernar"
-appId: "com.example.app"
+appId: "com.tighug.achernar"
 files:
   - "dist/"
   - "node_modules/"
@@ -11,7 +11,6 @@ files:
   - "renderer.js.LICENSE.txt"
   - "package.json"
 directories:
-  buildResources: "resources"
   output: "release"
 publish:
   provider: "github"
@@ -19,9 +18,15 @@ publish:
   repo: "achernar-admin-app"
   private: false
 win:
+  icon: "resource/icons"
   target:
     - "nsis"
-    - "msi"
+nsis:
+  differentialPackage: true
+mac:
+  icon: "resource/icons"
+  target:
+    - "dmg"
 dmg:
   contents:
     - x: 130
@@ -31,7 +36,6 @@ dmg:
       type: "link"
       path: "/Applications"
 linux:
+  icon: "resource/icons"
   target:
     - "deb"
-    - "AppImage"
-  category: "Development"
