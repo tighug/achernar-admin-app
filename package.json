@@ -2,7 +2,7 @@
   "name": "achernar-admin-app",
   "version": "1.0.0",
   "main": "dist/main.js",
-  "repository": "https://github.com/tighug/achernar-dso-app.git",
+  "repository": "https://github.com/tighug/achernar-admin-app.git",
   "author": "tighug <kapuriko123@gmail.com>",
   "license": "MIT",
   "scripts": {
@@ -12,7 +12,7 @@
     "dev": "webpack serve -c ./webpack.dev.ts",
     "dev:main": "cross-env NODE_ENV=development electron ./dist/main.js",
     "start": "cross-env NODE_ENV=producton electron ./dist/main.js",
-    "package": "yarn build && electron-builder build -mwl -p always"
+    "package": "yarn build && electron-builder build -mw -p always"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
