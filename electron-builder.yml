@@ -1,0 +1,41 @@
+productName: "Achernar"
+appId: "com.tighug.achernar"
+files:
+  - "dist/"
+  - "node_modules/"
+  - "index.html"
+  - "main.js"
+  - "main.js.LICENSE.txt"
+  - "preload.js"
+  - "renderer.js"
+  - "renderer.js.LICENSE.txt"
+  - "package.json"
+directories:
+  output: "release"
+publish:
+  provider: "github"
+  owner: "tighug"
+  repo: "achernar-admin-app"
+  private: false
+win:
+  icon: "resource/icons"
+  target:
+    - "nsis"
+nsis:
+  differentialPackage: true
+mac:
+  icon: "resource/icons"
+  target:
+    - "dmg"
+dmg:
+  contents:
+    - x: 130
+      y: 220
+    - x: 410
+      y: 220
+      type: "link"
+      path: "/Applications"
+linux:
+  icon: "resource/icons"
+  target:
+    - "deb"
