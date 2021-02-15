@@ -2,12 +2,17 @@ import { Grid, Input, Slider, Typography } from "@material-ui/core";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { Load } from "../../../api/flowAPI";
 import { setSellerCount } from "../../../store/bidCases";
 import { DialogItem } from "./DialogItem";
 
 export function SellerCountSlider() {
   const { sellerCount } = useSelector((s) => s.bidCases);
-  const pvCount = useSelector((s) => s.loads.pvs.length);
+  const { pvs, loads } = useSelector((s) => s.loads);
+  const pvCount = pvs.filter((pv) => {
+    const matchedLoad = loads.find((l) => l.node.id === pv.node.id) as Load;
+    return pv.val - matchedLoad.val > 0;
+  }).length;
   const dispatch = useDispatch();
 
   return (
