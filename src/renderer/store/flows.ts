@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { Flow, getFlows } from "../api/flowAPI";
+import { Flow, getBeforeFlows } from "../api/flowAPI";
 
 export const fetchFlows = createAsyncThunk(
   "flows/fetchFlows",
-  async (caseId: number): Promise<Flow[]> => await getFlows(caseId)
+  async (caseId: number): Promise<Flow[]> => await getBeforeFlows(caseId)
 );
 
 type State = {

@@ -12,21 +12,26 @@ import { setCaseId } from "../../../store/cases";
 import { LoadTable } from "./LoadTable";
 import { PVTable } from "./PVTable";
 import FlowTable from "./FlowTable";
+import { BidCaseTable } from "./BidCaseTable";
+import AddBidCaseDialog from "../dialog/AddBidCaseDialog";
+import { setBidCaseId } from "../../../store/bidCases";
 
 const height = 500;
 
 export function Tables() {
   const { selected } = useSelector((s) => s.widgets);
   const dispatch = useDispatch();
-  const caseIds = useSelector((s) => s.cases.cases).map((c) => c.id);
-  const caseId = useSelector((s) => s.cases.caseId);
+  const caseIds = useSelector((s) => s.cases.cases.map((c) => c.id));
+  const bidCaseIds = useSelector((s) => s.bidCases.bidCases.map((c) => c.id));
+  const { bidCaseId } = useSelector((s) => s.bidCases);
+  const { caseId } = useSelector((s) => s.cases);
 
   const caseAction = (
     <div style={{ display: "flex", alignItems: "center" }}>
       <div style={{ width: 200, marginRight: 20 }}>
         <AppSelect
-          label="Case"
-          labelId="Case"
+          label="Case (Load)"
+          labelId="Case (Load)"
           onChange={({ target }) => dispatch(setCaseId(Number(target.value)))}
           options={caseIds}
           value={caseId}
@@ -34,6 +39,23 @@ export function Tables() {
         />
       </div>
       <AddCaseDialog />
+    </div>
+  );
+  const bidCaseAction = (
+    <div style={{ display: "flex", alignItems: "center" }}>
+      <div style={{ width: 200, marginRight: 20 }}>
+        <AppSelect
+          label="Case (Bid)"
+          labelId="Case (Bid)"
+          onChange={({ target }) =>
+            dispatch(setBidCaseId(Number(target.value)))
+          }
+          options={bidCaseIds}
+          value={bidCaseId}
+          nullable
+        />
+      </div>
+      <AddBidCaseDialog />
     </div>
   );
   const nodes = (
@@ -57,9 +79,19 @@ export function Tables() {
           action={caseAction}
           icon="notes"
           color={orange[500]}
-          title="Cases"
+          title="Cases (Load)"
         >
           <CaseTable height={height} />
+        </AppPanel>
+      </Grid>
+      <Grid item xs={12}>
+        <AppPanel
+          action={bidCaseAction}
+          icon="notes"
+          color={orange[500]}
+          title="Cases (Bid)"
+        >
+          <BidCaseTable height={height} />
         </AppPanel>
       </Grid>
     </>

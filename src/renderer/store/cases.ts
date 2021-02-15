@@ -79,7 +79,6 @@ export const caseSlice = createSlice({
       state.seed = action.payload;
     },
     updateStatus(state, action: PayloadAction<{ id: number; status: string }>) {
-      console.log(action.payload);
       const { id, status } = action.payload;
       state.cases = state.cases.map((c) =>
         c.id === id ? { ...c, status } : c

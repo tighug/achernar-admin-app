@@ -12,6 +12,11 @@ import { updateStatus } from "../../store/cases";
 import { fetchLoads, fetchPVs, resetLoads } from "../../store/loads";
 import { fetchFlows, resetFlows } from "../../store/flows";
 import { Filters } from "./Filters";
+import {
+  fetchBidCases,
+  resetBidCases,
+  updateBidCaseStatus,
+} from "../../store/bidCases";
 
 export function Main() {
   const { feeder } = useSelector((s) => s.feeders);
@@ -22,9 +27,12 @@ export function Main() {
   useEffect(() => {
     dispatch(fetchFeeders());
     ws.addEventListener("open", () => console.log("websocket connected."));
-    ws.addEventListener("message", (e) =>
-      dispatch(updateStatus(JSON.parse(e.data)))
-    );
+    ws.addEventListener("message", (e) => {
+      console.log(e.data);
+      const msg = JSON.parse(e.data);
+      if (msg.type === "case") dispatch(updateStatus(msg));
+      if (msg.type === "bidCase") dispatch(updateBidCaseStatus(msg));
+    });
   }, []);
 
   useEffect(() => {
@@ -40,9 +48,11 @@ export function Main() {
         dispatch(fetchLoads(matched.id));
         dispatch(fetchPVs(matched.id));
         dispatch(fetchFlows(matched.id));
+        dispatch(fetchBidCases(matched.id));
       } else {
         dispatch(resetFlows());
         dispatch(resetLoads());
+        dispatch(resetBidCases());
       }
     } else {
       dispatch(resetFlows());

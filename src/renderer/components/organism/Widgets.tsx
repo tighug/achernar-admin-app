@@ -25,10 +25,10 @@ export function Widgets() {
           active={selected === "nodes"}
           color={green[500]}
           icon="adjust"
-          title="Nodes & Lines"
+          title="Nodes"
           onClick={() => clickHandler("nodes")}
         >
-          {nodeCount} / {lineCount}
+          {nodeCount}
         </AppWidget>
       </Grid>
       <Grid item xs={3}>
