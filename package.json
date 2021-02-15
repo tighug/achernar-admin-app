@@ -1,6 +1,6 @@
 {
   "name": "achernar-admin-app",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "main": "dist/main.js",
   "repository": "https://github.com/tighug/achernar-admin-app.git",
   "author": "tighug <kapuriko123@gmail.com>",
