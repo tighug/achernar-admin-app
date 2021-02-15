@@ -1,17 +1,17 @@
 import {
   blue,
   cyan,
+  deepOrange,
   green,
-  grey,
+  indigo,
   pink,
-  purple,
   red,
   teal,
   yellow,
 } from "@material-ui/core/colors";
 import React from "react";
 import { Layer } from "react-konva";
-import { Flow, Line, Load } from "../../../api/flowAPI";
+import { Bidder, Flow, Line, Load } from "../../../api/flowAPI";
 import { colorGradient } from "../../../util/colorGradient";
 import { DiagramState } from "../../../store/diagrams";
 import { NetworkNode } from "./NetworkNode";
@@ -32,6 +32,8 @@ type NetworkNodesProps = {
   loads: Load[];
   pvs: Load[];
   flows: Flow[];
+  buyers: Bidder[];
+  sellers: Bidder[];
   diagramState: DiagramState;
   theme: DefaultTheme;
 };
@@ -42,12 +44,16 @@ export function NetworkNodesAndLines({
   loads,
   pvs,
   flows,
+  buyers,
+  sellers,
   diagramState,
   theme,
 }: NetworkNodesProps) {
   const feederColor = teal[500];
   const loadColor = yellow[500];
   const pvColor = green[500];
+  const buyerColor = indigo[500];
+  const sellerColor = deepOrange[500];
   const pLineColor = pink[500];
   const zeroLineColor = theme.palette.background.paper;
   const nLineColor = blue[500];
@@ -68,7 +74,6 @@ export function NetworkNodesAndLines({
       if (visibility.pv && pvs.find((pv) => pv.node.id === id)) {
         return pvColor;
       }
-
       if (visibility.load && loads.find((l) => l.node.id === id)) {
         return loadColor;
       }
@@ -84,6 +89,20 @@ export function NetworkNodesAndLines({
 
     const c = color();
 
+    return c && <NetworkNode x={x} y={y} radius={nodeR} color={c} key={i} />;
+  });
+
+  const bidderNodes = modNodes.map(({ id, x, y }, i) => {
+    const color = () => {
+      if (visibility.buyer && buyers.find((s) => s.node.id === id)) {
+        return buyerColor;
+      }
+      if (visibility.seller && sellers.find((s) => s.node.id === id)) {
+        return sellerColor;
+      }
+      return;
+    };
+    const c = color();
     return c && <NetworkNode x={x} y={y} radius={nodeR} color={c} key={i} />;
   });
 
@@ -118,6 +137,7 @@ export function NetworkNodesAndLines({
     <>
       {visibility.line && <Layer>{networkLines}</Layer>}
       <Layer>{networkNodes}</Layer>
+      <Layer>{bidderNodes}</Layer>
     </>
   );
 }

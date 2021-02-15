@@ -70,6 +70,48 @@ export type Flow = {
   lineI: number;
 };
 
+export type BidCase = {
+  id: number;
+  case: Case;
+  buyerCount: number;
+  sellerCount: number;
+  minBuyPrice: number;
+  maxBuyPrice: number;
+  minSellPrice: number;
+  maxSellPrice: number;
+  minBuyVolume: number;
+  maxBuyVolume: number;
+  minSellVolume: number;
+  maxSellVolume: number;
+  seed: number;
+  agreedPrice: number;
+  status: string;
+};
+
+export type RegisterBidCaseInput = {
+  caseId: number;
+  buyerCount: number;
+  sellerCount: number;
+  minBuyPrice: number;
+  maxBuyPrice: number;
+  minSellPrice: number;
+  minBuyVolume: number;
+  maxBuyVolume: number;
+  minSellVolume: number;
+  maxSellVolume: number;
+  seed: number;
+};
+
+export type Bidder = {
+  id: number;
+  bidCase: BidCase;
+  node: Node;
+  price: number;
+  volume: number;
+  type: string;
+  agreed: number;
+};
+
 export async function getFeeders(): Promise<Feeder[]> {
   const feeders = await cache.find<Feeder[] | undefined>("feeders");
   if (feeders === undefined) {
@@ -111,16 +153,7 @@ export async function getCases(feederId: number): Promise<Case[]> {
   return data.cases;
 }
 
-export async function registerCase(props: {
-  feederId: number;
-  hour: number;
-  minute: number;
-  pvCount: number;
-  pvScale: number;
-  loadScale: number;
-  baseV: number;
-  seed: number;
-}): Promise<Case> {
+export async function registerCase(props: RegisterCaseInput): Promise<Case> {
   const { data } = await api.post<{ case: Case }>("/cases", props);
   return data.case;
 }
@@ -131,7 +164,7 @@ export async function deleteCase(id: number): Promise<number> {
 }
 
 export async function simCase(id: number): Promise<void> {
-  await api.post(`/cases/${id}/jobs`);
+  await api.post(`/cases/${id}/queue`);
 }
 
 export async function getLoads(caseId: number): Promise<Load[]> {
@@ -148,9 +181,59 @@ export async function getPVs(caseId: number): Promise<Load[]> {
   return data.loads;
 }
 
-export async function getFlows(caseId: number): Promise<Flow[]> {
+export async function getBidCases(caseId: number): Promise<BidCase[]> {
+  const { data } = await api.get<{ bidCases: BidCase[] }>(
+    `/cases/${caseId}/bidCases?fields=id,buyerCount,sellerCount,minBuyPrice,maxBuyPrice,minSellPrice,maxSellPrice,minBuyVolume,maxBuyVolume,minSellVolume,maxSellVolume,seed,agreedPrice,status`
+  );
+  return data.bidCases;
+}
+
+export async function registerBidCase(
+  props: RegisterBidCaseInput
+): Promise<BidCase> {
+  const { data } = await api.post<{ bidCase: BidCase }>("/bidCases", props);
+  return data.bidCase;
+}
+
+export async function deleteBidCase(id: number): Promise<number> {
+  await api.delete(`/bidCases/${id}`);
+  return id;
+}
+
+export async function simBidCase(id: number): Promise<void> {
+  await api.post(`/bidCases/${id}/queue`);
+}
+
+export async function getBidders(bidCaseId: number): Promise<Bidder[]> {
+  const { data } = await api.get<{ bidders: Bidder[] }>(
+    `/bidCases/${bidCaseId}/bidders?fields=id,node,num,price,volume,agreed,type`
+  );
+  return data.bidders;
+}
+
+export async function getBeforeFlows(caseId: number): Promise<Flow[]> {
   const { data } = await api.get<{ flows: Flow[] }>(
-    `/cases/${caseId}/flows?before=true&fields=id,line,nextNode,num,nextNodeP,nextNodeV,lineI`
+    `/cases/${caseId}/flows?type=before&fields=id,line,nextNode,num,nextNodeP,nextNodeV,lineI`
+  );
+  return data.flows;
+}
+
+export async function getAfterFlows(
+  caseId: number,
+  bidCaseId: number
+): Promise<Flow[]> {
+  const { data } = await api.get<{ flows: Flow[] }>(
+    `/cases/${caseId}/flows?type=after&bidCaseId=${bidCaseId}&fields=id,line,nextNode,num,nextNodeP,nextNodeV,lineI`
+  );
+  return data.flows;
+}
+
+export async function getFixedFlows(
+  caseId: number,
+  bidCaseId: number
+): Promise<Flow[]> {
+  const { data } = await api.get<{ flows: Flow[] }>(
+    `/cases/${caseId}/flows?type=fixed&bidCaseId=${bidCaseId}&fields=id,line,nextNode,num,nextNodeP,nextNodeV,lineI`
   );
   return data.flows;
 }
