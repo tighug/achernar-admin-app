@@ -84,6 +84,7 @@ export type BidCase = {
   minSellVolume: number;
   maxSellVolume: number;
   seed: number;
+  agreedPrice: number;
   status: string;
 };
 
@@ -182,7 +183,7 @@ export async function getPVs(caseId: number): Promise<Load[]> {
 
 export async function getBidCases(caseId: number): Promise<BidCase[]> {
   const { data } = await api.get<{ bidCases: BidCase[] }>(
-    `/cases/${caseId}/bidCases?fields=id,buyerCount,sellerCount,minBuyPrice,maxBuyPrice,minSellPrice,maxSellPrice,minBuyVolume,maxBuyVolume,minSellVolume,maxSellVolume,seed,status`
+    `/cases/${caseId}/bidCases?fields=id,buyerCount,sellerCount,minBuyPrice,maxBuyPrice,minSellPrice,maxSellPrice,minBuyVolume,maxBuyVolume,minSellVolume,maxSellVolume,seed,agreedPrice,status`
   );
   return data.bidCases;
 }
@@ -201,6 +202,13 @@ export async function deleteBidCase(id: number): Promise<number> {
 
 export async function simBidCase(id: number): Promise<void> {
   await api.post(`/bidCases/${id}/queue`);
+}
+
+export async function getBidders(bidCaseId: number): Promise<Bidder[]> {
+  const { data } = await api.get<{ bidders: Bidder[] }>(
+    `/bidCases/${bidCaseId}/bidders?fields=id,node,num,price,volume,agreed,type`
+  );
+  return data.bidders;
 }
 
 export async function getBeforeFlows(caseId: number): Promise<Flow[]> {

@@ -103,11 +103,11 @@ export const bidCasesSlice = createSlice({
     },
     updateBidCaseStatus(
       state,
-      action: PayloadAction<{ id: number; status: string }>
+      action: PayloadAction<{ id: number; status: string; agreedPrice: number }>
     ) {
-      const { id, status } = action.payload;
+      const { id, status, agreedPrice } = action.payload;
       state.bidCases = state.bidCases.map((c) =>
-        c.id === id ? { ...c, status } : c
+        c.id === id ? { ...c, status, agreedPrice } : c
       );
     },
   },

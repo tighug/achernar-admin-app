@@ -96,5 +96,5 @@ const Right = styled.div`
 `;
 
 const StyledIcon = styled(AppIcon)`
-  font-size: 56px;
+  font-size: 48px;
 `;

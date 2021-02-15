@@ -10,12 +10,20 @@ export type PanelProps = {
   color?: string;
   icon?: string;
   title?: string;
+  height?: string;
 };
 
-export function AppPanel({ action, children, icon, color, title }: PanelProps) {
+export function AppPanel({
+  action,
+  children,
+  icon,
+  color,
+  title,
+  height,
+}: PanelProps) {
   const renderIcon = icon && <AppIcon color={color}>{icon}</AppIcon>;
   return (
-    <AppCard>
+    <AppCard style={{ height: height }}>
       {title && (
         <Toolbar>
           {renderIcon}

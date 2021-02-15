@@ -9,6 +9,8 @@ export type DiagramState = {
     load: boolean;
     pv: boolean;
     line: boolean;
+    buyer: boolean;
+    seller: boolean;
     violation: boolean;
   };
 };
@@ -24,6 +26,8 @@ export const diagramSlice = createSlice({
       load: true,
       pv: true,
       line: true,
+      buyer: true,
+      seller: true,
       violation: true,
     },
   } as DiagramState,
@@ -46,6 +50,12 @@ export const diagramSlice = createSlice({
     togglePVVisibility: (state) => {
       state.visibility.pv = !state.visibility.pv;
     },
+    toggleBuyerVisibility: (state) => {
+      state.visibility.buyer = !state.visibility.buyer;
+    },
+    toggleSellerVisibility: (state) => {
+      state.visibility.seller = !state.visibility.seller;
+    },
     toggleLineVisibility: (state) => {
       state.visibility.line = !state.visibility.line;
     },
@@ -62,6 +72,8 @@ export const {
   setStrength,
   toggleLoadVisibility,
   togglePVVisibility,
+  toggleBuyerVisibility,
+  toggleSellerVisibility,
   toggleLineVisibility,
   toggleViolationVisibility,
 } = diagramSlice.actions;

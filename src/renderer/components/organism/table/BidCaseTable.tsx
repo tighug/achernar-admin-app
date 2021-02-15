@@ -64,7 +64,7 @@ export function BidCaseTable({ height }: BidCaseTableProps) {
   };
 
   const columns: ColDef[] = [
-    { field: "id", headerName: "ID", width: 100 },
+    { field: "id", headerName: "ID", flex: 1 },
     { field: "buyerCount", headerName: "Buyer Count", flex: 1 },
     { field: "sellerCount", headerName: "Seller Count", flex: 1 },
     { field: "minBuyPrice", headerName: "Min Buy Price", flex: 1 },
@@ -75,6 +75,7 @@ export function BidCaseTable({ height }: BidCaseTableProps) {
     { field: "maxBuyVolume", headerName: "Max Buy Volume", flex: 1 },
     { field: "minSellVolume", headerName: "Min Sell Volume", flex: 1 },
     { field: "maxSellVolume", headerName: "Max Sell Volume", flex: 1 },
+    { field: "agreedPrice", headerName: "Agreed Price", flex: 1 },
     {
       field: "status",
       headerName: "Status",
